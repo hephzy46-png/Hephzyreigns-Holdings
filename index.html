@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hephzyreigns Holdings — Global Shipping & Logistics</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy:   #07111f;
+    --deep:   #0d1e33;
+    --mid:    #122843;
+    --gold:   #c8963e;
+    --gold2:  #e8b55a;
+    --cream:  #f5ede0;
+    --white:  #ffffff;
+    --muted:  #7a94b0;
+    --border: rgba(200,150,62,.18);
+    --glow:   0 0 60px rgba(200,150,62,.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 5vw;
+    background: transparent;
+    transition: background .4s, backdrop-filter .4s, box-shadow .4s;
+  }
+  nav.scrolled {
+    background: rgba(7,17,31,.88);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 1px 0 var(--border);
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: .75rem;
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    display: grid; place-items: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700; font-size: 1rem; color: var(--navy);
+  }
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600; font-size: 1.15rem; letter-spacing: .06em;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .logo-text span { display: block; font-size: .65rem; letter-spacing: .22em; color: var(--gold); font-weight: 400; text-transform: uppercase; }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 2.4rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: .82rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    transition: color .3s;
+  }
+  .nav-links a:hover { color: var(--gold2); }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: var(--navy) !important;
+    padding: .55rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 600 !important;
+    letter-spacing: .08em !important;
+    transition: opacity .3s !important;
+  }
+  .nav-cta:hover { opacity: .88; color: var(--navy) !important; }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { width: 24px; height: 2px; background: var(--cream); border-radius: 1px; transition: .3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 0 5vw;
+  }
+
+  .hero-canvas {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+
+  /* Grid overlay */
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,150,62,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,150,62,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* Diagonal accent */
+  .hero-diagonal {
+    position: absolute; right: -10vw; top: -10vh;
+    width: 70vw; height: 120vh;
+    background: linear-gradient(135deg, var(--deep) 0%, var(--mid) 50%, transparent 100%);
+    transform: skewX(-8deg);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 720px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: .75rem;
+    font-family: 'DM Mono', monospace; font-size: .72rem;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp .8s .2s forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 7vw, 6.4rem);
+    font-weight: 300; line-height: 1.06;
+    letter-spacing: -.01em;
+    color: var(--white);
+    opacity: 0; animation: fadeUp .9s .4s forwards;
+  }
+  .hero-title em {
+    font-style: italic; color: var(--gold2);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 1.8rem;
+    font-size: 1.05rem; line-height: 1.8;
+    color: var(--muted); max-width: 500px;
+    opacity: 0; animation: fadeUp .9s .6s forwards;
+  }
+
+  .hero-actions {
+    margin-top: 2.8rem; display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp .9s .8s forwards;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: var(--navy); padding: .85rem 2.2rem;
+    border: none; border-radius: 2px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: .85rem;
+    font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    text-decoration: none; display: inline-block;
+    transition: transform .3s, box-shadow .3s;
+    box-shadow: 0 4px 24px rgba(200,150,62,.28);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(200,150,62,.4); }
+
+  .btn-outline {
+    color: var(--cream); padding: .85rem 2.2rem;
+    border: 1px solid var(--border); border-radius: 2px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: .85rem;
+    font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+    text-decoration: none; display: inline-block;
+    transition: border-color .3s, color .3s, background .3s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); background: rgba(200,150,62,.06); }
+
+  .hero-stats {
+    position: absolute; bottom: 3rem; left: 5vw; right: 5vw;
+    display: flex; gap: 3rem; flex-wrap: wrap;
+    border-top: 1px solid var(--border); padding-top: 2rem;
+    opacity: 0; animation: fadeUp .9s 1s forwards;
+  }
+  .hero-stat {}
+  .hero-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem; font-weight: 600; color: var(--gold2);
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); margin-top: .3rem;
+  }
+
+  /* Floating ship visual */
+  .hero-visual {
+    position: absolute; right: 5vw; bottom: 8vh;
+    width: clamp(280px, 38vw, 560px);
+    opacity: 0; animation: fadeLeft 1.2s .5s forwards;
+    pointer-events: none;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(40px); }
+    to   { opacity: .22; transform: translateX(0); }
+  }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 6rem 5vw; }
+
+  .section-label {
+    display: inline-flex; align-items: center; gap: .75rem;
+    font-family: 'DM Mono', monospace; font-size: .7rem;
+    letter-spacing: .22em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+  .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 4vw, 3.8rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--white);
+  }
+  .section-title strong { font-weight: 600; color: var(--gold2); }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1.2rem 0; overflow: hidden;
+    background: var(--deep);
+  }
+  .marquee-track {
+    display: flex; gap: 4rem; white-space: nowrap;
+    animation: marquee 28s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    font-family: 'DM Mono', monospace; font-size: .72rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--muted); display: flex; align-items: center; gap: 1.2rem;
+  }
+  .marquee-item span { color: var(--gold); font-size: 1rem; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--deep); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    margin-top: 3rem;
+  }
+  .about-text p {
+    color: var(--muted); line-height: 1.9; margin-bottom: 1.2rem; font-size: .97rem;
+  }
+  .about-text p:last-of-type { margin-bottom: 2rem; }
+
+  .about-visual {
+    position: relative;
+  }
+  .about-box {
+    background: var(--mid);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-box::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold2), transparent);
+  }
+  .about-list { list-style: none; }
+  .about-list li {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1rem 0; border-bottom: 1px solid var(--border);
+    font-size: .9rem; color: var(--muted); line-height: 1.6;
+  }
+  .about-list li:last-child { border-bottom: none; }
+  .about-list li::before {
+    content: '◆'; color: var(--gold); font-size: .5rem; flex-shrink: 0; margin-top: .35rem;
+  }
+  .about-list li strong { color: var(--cream); display: block; margin-bottom: .2rem; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--navy); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px; margin-top: 3rem;
+    border: 1.5px solid var(--border); border-radius: 4px;
+    overflow: hidden;
+  }
+  .service-card {
+    background: var(--deep);
+    padding: 2.6rem 2.2rem;
+    position: relative; overflow: hidden;
+    transition: background .35s;
+    cursor: default;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(200,150,62,.07), transparent);
+    opacity: 0; transition: opacity .35s;
+  }
+  .service-card:hover { background: var(--mid); }
+  .service-card:hover::after { opacity: 1; }
+
+  .service-icon {
+    width: 52px; height: 52px; margin-bottom: 1.4rem;
+    background: rgba(200,150,62,.1);
+    border: 1px solid var(--border); border-radius: 3px;
+    display: grid; place-items: center;
+    font-size: 1.5rem;
+    transition: background .35s, border-color .35s;
+  }
+  .service-card:hover .service-icon {
+    background: rgba(200,150,62,.18); border-color: var(--gold);
+  }
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600; color: var(--white); margin-bottom: .7rem;
+  }
+  .service-card p { color: var(--muted); font-size: .88rem; line-height: 1.8; }
+
+  .service-tag {
+    display: inline-block; margin-top: 1.2rem;
+    font-family: 'DM Mono', monospace; font-size: .65rem;
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid var(--border); padding: .3rem .7rem; border-radius: 1px;
+  }
+
+  /* ── PROCESS ── */
+  #process { background: var(--deep); }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem; margin-top: 3rem; position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute; top: 2.6rem; left: 2.5rem; right: 2.5rem; height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    pointer-events: none;
+  }
+  .process-step { text-align: center; padding: 2rem 1rem; }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 1px solid var(--gold);
+    font-family: 'DM Mono', monospace; font-size: .8rem;
+    color: var(--gold); margin-bottom: 1.2rem;
+    background: var(--navy); position: relative; z-index: 1;
+    transition: background .3s;
+  }
+  .process-step:hover .step-num { background: var(--gold); color: var(--navy); }
+  .process-step h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; color: var(--white); margin-bottom: .6rem;
+  }
+  .process-step p { color: var(--muted); font-size: .85rem; line-height: 1.7; }
+
+  /* ── STATS ── */
+  #stats {
+    background: linear-gradient(135deg, var(--mid), var(--deep));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem; text-align: center;
+  }
+  .stat-card { padding: 2rem 1rem; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.8rem; font-weight: 600; color: var(--gold2); line-height: 1;
+  }
+  .stat-suffix { font-size: 2rem; }
+  .stat-label {
+    font-size: .75rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--muted); margin-top: .5rem;
+  }
+  .stat-divider {
+    width: 24px; height: 2px; background: var(--gold);
+    margin: .6rem auto 0;
+  }
+
+  /* ── COVERAGE ── */
+  #coverage { background: var(--navy); }
+  .coverage-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    margin-top: 3rem;
+  }
+  .route-list { list-style: none; }
+  .route-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 0; border-bottom: 1px solid var(--border);
+    font-size: .9rem;
+  }
+  .route-from { color: var(--cream); }
+  .route-arrow { color: var(--gold); font-family: 'DM Mono', monospace; }
+  .route-to { color: var(--muted); }
+  .route-time {
+    font-family: 'DM Mono', monospace; font-size: .72rem;
+    color: var(--gold2); letter-spacing: .08em;
+  }
+
+  .map-placeholder {
+    background: var(--mid); border: 1px solid var(--border); border-radius: 4px;
+    height: 340px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 1rem;
+    position: relative; overflow: hidden;
+  }
+  .map-placeholder svg { width: 90%; opacity: .18; }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--deep); }
+  .testimonial-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .testi-card {
+    background: var(--navy);
+    border: 1px solid var(--border); border-radius: 4px;
+    padding: 2.2rem; position: relative; overflow: hidden;
+    transition: border-color .3s, transform .3s;
+  }
+  .testi-card:hover { border-color: rgba(200,150,62,.35); transform: translateY(-3px); }
+  .testi-card::before {
+    content: '"';
+    position: absolute; top: -.5rem; right: 1rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 8rem;
+    color: rgba(200,150,62,.07); line-height: 1; pointer-events: none;
+  }
+  .testi-text {
+    font-size: .92rem; line-height: 1.85; color: var(--muted); margin-bottom: 1.6rem;
+    font-style: italic;
+  }
+  .testi-author { display: flex; align-items: center; gap: 1rem; }
+  .testi-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    display: grid; place-items: center;
+    font-family: 'Cormorant Garamond', serif; font-weight: 700;
+    color: var(--navy); font-size: 1rem;
+  }
+  .testi-name { font-weight: 500; color: var(--cream); font-size: .88rem; }
+  .testi-role { font-size: .75rem; color: var(--muted); margin-top: .15rem; }
+
+  /* ── CTA ── */
+  #cta {
+    background: var(--mid);
+    border-top: 1px solid var(--border);
+    text-align: center; padding: 6rem 5vw;
+    position: relative; overflow: hidden;
+  }
+  #cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,150,62,.07), transparent);
+  }
+  #cta .section-title { position: relative; }
+  #cta p {
+    color: var(--muted); max-width: 520px; margin: 1.2rem auto 2.5rem;
+    font-size: .97rem; line-height: 1.8; position: relative;
+  }
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--deep); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.3fr; gap: 4rem;
+    margin-top: 3rem;
+  }
+  .contact-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; color: var(--white); margin-bottom: 1rem;
+  }
+  .contact-info p { color: var(--muted); font-size: .9rem; line-height: 1.8; margin-bottom: 2rem; }
+  .contact-detail {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .contact-detail-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: rgba(200,150,62,.1); border: 1px solid var(--border); border-radius: 2px;
+    display: grid; place-items: center; font-size: .9rem;
+  }
+  .contact-detail-text { font-size: .88rem; }
+  .contact-detail-text strong { color: var(--cream); display: block; margin-bottom: .15rem; }
+  .contact-detail-text span { color: var(--muted); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: .4rem; }
+  .form-group label {
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold);
+    font-family: 'DM Mono', monospace;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--navy); border: 1px solid var(--border);
+    color: var(--cream); padding: .8rem 1rem; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: .88rem;
+    outline: none; transition: border-color .3s;
+    resize: none;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(122,148,176,.45); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-group select option { background: var(--navy); }
+  .form-submit {
+    margin-top: .5rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #040c17;
+    border-top: 1px solid var(--border);
+    padding: 4rem 5vw 2rem;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 3rem;
+    padding-bottom: 3rem; border-bottom: 1px solid var(--border);
+  }
+  .footer-brand p { color: var(--muted); font-size: .88rem; line-height: 1.8; margin-top: 1rem; max-width: 240px; }
+  .footer-col h4 {
+    font-family: 'DM Mono', monospace; font-size: .7rem; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: .7rem; }
+  .footer-col ul li a {
+    color: var(--muted); text-decoration: none; font-size: .85rem;
+    transition: color .3s;
+  }
+  .footer-col ul li a:hover { color: var(--gold2); }
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 2rem; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom p { color: var(--muted); font-size: .8rem; }
+  .footer-socials { display: flex; gap: .8rem; }
+  .social-btn {
+    width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 2px;
+    display: grid; place-items: center; color: var(--muted); font-size: .75rem;
+    text-decoration: none; transition: border-color .3s, color .3s;
+  }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── SCROLL ANIMATION ── */
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .about-grid { grid-template-columns: 1fr; }
+    .coverage-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    .process-steps::before { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 580px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .hero-actions { flex-direction: column; }
+    .hero-title { font-size: 2.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav id="nav">
+  <a href="#" class="logo">
+    <div class="logo-mark">H</div>
+    <div class="logo-text">
+      Hephzyreigns Holdings
+      <span>Global Shipping & Logistics</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#coverage">Coverage</a></li>
+    <li><a href="#testimonials">Clients</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <div class="hamburger" id="ham">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="grid-overlay"></div>
+  <div class="hero-diagonal"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Global Logistics Excellence</div>
+    <h1 class="hero-title">
+      Moving Cargo.<br>
+      <em>Connecting Worlds.</em>
+    </h1>
+    <p class="hero-sub">
+      Hephzyreigns Holdings delivers precision shipping, end-to-end freight management,
+      and custom logistics solutions across land, sea, and air — so your cargo arrives
+      on time, every time.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Request a Quote</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+  </div>
+
+  <!-- Abstract ship SVG -->
+  <svg class="hero-visual" viewBox="0 0 500 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- hull -->
+    <path d="M60 240 L440 240 L400 300 L100 300 Z" fill="#c8963e" opacity=".9"/>
+    <!-- body -->
+    <rect x="100" y="150" width="300" height="90" fill="#e8b55a" opacity=".7"/>
+    <!-- containers -->
+    <rect x="115" y="160" width="60" height="40" rx="2" fill="#c8963e"/>
+    <rect x="185" y="160" width="60" height="40" rx="2" fill="#a07030"/>
+    <rect x="255" y="160" width="60" height="40" rx="2" fill="#c8963e"/>
+    <rect x="325" y="160" width="60" height="40" rx="2" fill="#a07030"/>
+    <!-- bridge -->
+    <rect x="340" y="100" width="80" height="50" rx="2" fill="#e8b55a" opacity=".8"/>
+    <rect x="352" y="110" width="16" height="12" rx="1" fill="#0d1e33" opacity=".6"/>
+    <rect x="376" y="110" width="16" height="12" rx="1" fill="#0d1e33" opacity=".6"/>
+    <!-- mast -->
+    <line x1="380" y1="100" x2="380" y2="55" stroke="#c8963e" stroke-width="3"/>
+    <line x1="380" y1="72" x2="420" y2="72" stroke="#c8963e" stroke-width="2"/>
+    <!-- flag -->
+    <polygon points="420,65 445,72 420,79" fill="#e8b55a"/>
+    <!-- water lines -->
+    <path d="M20 310 Q80 302 140 310 Q200 318 260 310 Q320 302 380 310 Q440 318 490 310" stroke="#c8963e" stroke-width="1.5" fill="none" opacity=".3"/>
+    <path d="M20 325 Q90 317 160 325 Q230 333 300 325 Q370 317 440 325 Q460 329 490 325" stroke="#c8963e" stroke-width="1" fill="none" opacity=".2"/>
+  </svg>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num" data-target="120">0</div>
+      <div class="hero-stat-label">Countries Served</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num" data-target="50000">0</div>
+      <div class="hero-stat-label">Shipments Delivered</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num" data-target="18">0</div>
+      <div class="hero-stat-label">Years of Excellence</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num" data-target="99">0</div>
+      <div class="hero-stat-label">% On-Time Rate</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>✦</span> Ocean Freight</div>
+    <div class="marquee-item"><span>✦</span> Air Cargo</div>
+    <div class="marquee-item"><span>✦</span> Road Haulage</div>
+    <div class="marquee-item"><span>✦</span> Warehousing</div>
+    <div class="marquee-item"><span>✦</span> Customs Clearance</div>
+    <div class="marquee-item"><span>✦</span> Supply Chain</div>
+    <div class="marquee-item"><span>✦</span> Cold Chain</div>
+    <div class="marquee-item"><span>✦</span> Project Cargo</div>
+    <div class="marquee-item"><span>✦</span> Ocean Freight</div>
+    <div class="marquee-item"><span>✦</span> Air Cargo</div>
+    <div class="marquee-item"><span>✦</span> Road Haulage</div>
+    <div class="marquee-item"><span>✦</span> Warehousing</div>
+    <div class="marquee-item"><span>✦</span> Customs Clearance</div>
+    <div class="marquee-item"><span>✦</span> Supply Chain</div>
+    <div class="marquee-item"><span>✦</span> Cold Chain</div>
+    <div class="marquee-item"><span>✦</span> Project Cargo</div>
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="section-label">Who We Are</div>
+  <h2 class="section-title">Built on <strong>Trust.</strong><br>Driven by Precision.</h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        Hephzyreigns Holdings is a premier shipping and logistics company dedicated to
+        seamless global cargo movement. With decades of industry experience, we combine
+        deep network expertise with cutting-edge tracking technology to deliver
+        unmatched reliability for businesses of every scale.
+      </p>
+      <p>
+        From bustling ports in West Africa to distribution centers across Europe and Asia,
+        our integrated operations ensure your goods move efficiently — with full visibility
+        from pick-up to final delivery.
+      </p>
+      <p>
+        We believe logistics is more than transport — it is the foundation of commerce.
+        That is why every shipment under our care is treated with the highest standards
+        of security, compliance, and care.
+      </p>
+      <a href="#contact" class="btn-primary">Work With Us</a>
+    </div>
+    <div class="about-visual reveal">
+      <div class="about-box">
+        <ul class="about-list">
+          <li>
+            <div>
+              <strong>ISO 9001 Certified</strong>
+              Internationally certified quality management systems ensuring every process meets world-class standards.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Real-Time Cargo Tracking</strong>
+              End-to-end visibility via our proprietary portal — monitor your shipment 24/7, anywhere in the world.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Dedicated Account Managers</strong>
+              Every client receives a dedicated logistics expert who knows your business and anticipates your needs.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Regulatory Compliance</strong>
+              Expert knowledge of customs, tariffs, and international trade law across all operating regions.
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title">Comprehensive <strong>Logistics</strong><br>Solutions</h2>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🚢</div>
+      <h3>Ocean Freight</h3>
+      <p>Full container loads (FCL) and less-than-container loads (LCL) handled with precision. We maintain strong partnerships with leading carriers on all major trade lanes.</p>
+      <span class="service-tag">FCL · LCL · RORO</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">✈️</div>
+      <h3>Air Cargo</h3>
+      <p>Time-critical and high-value shipments delivered by air to over 120 destinations. Charter options available for oversized or sensitive freight.</p>
+      <span class="service-tag">Express · Charter · General</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🚛</div>
+      <h3>Road Haulage</h3>
+      <p>Reliable overland transport connecting ports, warehouses, and final destinations with modern, GPS-tracked fleet operations.</p>
+      <span class="service-tag">FTL · LTL · Last Mile</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🏭</div>
+      <h3>Warehousing & Distribution</h3>
+      <p>State-of-the-art storage facilities with inventory management, order fulfilment, cross-docking, and value-added services.</p>
+      <span class="service-tag">Bonded · Ambient · Cold</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📋</div>
+      <h3>Customs Brokerage</h3>
+      <p>Experienced customs agents handle declarations, permits, duty optimisation, and compliance to keep your goods moving without delay.</p>
+      <span class="service-tag">Import · Export · Transit</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔗</div>
+      <h3>Supply Chain Management</h3>
+      <p>End-to-end supply chain consulting and execution — from vendor management and procurement to final customer delivery.</p>
+      <span class="service-tag">4PL · Consulting · Analytics</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section id="process">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">Your Cargo's Journey, <strong>Simplified</strong></h2>
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <h4>Request a Quote</h4>
+      <p>Share your cargo details and destination. We assess the best route, mode, and pricing within hours.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">02</div>
+      <h4>Documentation</h4>
+      <p>Our compliance team prepares all shipping documents, customs declarations, and permits.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">03</div>
+      <h4>Pickup & Packing</h4>
+      <p>We collect from your premises, inspect, pack, and load your cargo securely for transit.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">04</div>
+      <h4>Live Tracking</h4>
+      <p>Monitor your shipment in real time through our client portal with automated milestones.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">05</div>
+      <h4>Final Delivery</h4>
+      <p>Cleared, confirmed, and delivered to the destination — with proof-of-delivery and full reporting.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-card reveal">
+      <div class="stat-num"><span class="count" data-target="120">0</span>+</div>
+      <div class="stat-divider"></div>
+      <div class="stat-label">Countries Covered</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-num"><span class="count" data-target="50">0</span>k+</div>
+      <div class="stat-divider"></div>
+      <div class="stat-label">Shipments Completed</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-num"><span class="count" data-target="18">0</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat-label">Years in Business</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-num"><span class="count" data-target="99">0</span>%</div>
+      <div class="stat-divider"></div>
+      <div class="stat-label">On-Time Delivery</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-num"><span class="count" data-target="350">0</span>+</div>
+      <div class="stat-divider"></div>
+      <div class="stat-label">Corporate Clients</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COVERAGE ── -->
+<section id="coverage">
+  <div class="section-label">Global Reach</div>
+  <h2 class="section-title">Major Trade <strong>Routes</strong><br>We Operate</h2>
+  <div class="coverage-grid">
+    <div class="reveal">
+      <ul class="route-list">
+        <li class="route-item">
+          <span class="route-from">Accra, Ghana</span>
+          <span class="route-arrow">——▶</span>
+          <span class="route-to">Rotterdam, Netherlands</span>
+          <span class="route-time">14–18 days</span>
+        </li>
+        <li class="route-item">
+          <span class="route-from">Lagos, Nigeria</span>
+          <span class="route-arrow">——▶</span>
+          <span class="route-to">Dubai, UAE</span>
+          <span class="route-time">10–14 days</span>
+        </li>
+        <li class="route-item">
+          <span class="route-from">Tema Port</span>
+          <span class="route-arrow">——▶</span>
+          <span class="route-to">Shanghai, China</span>
+          <span class="route-time">22–28 days</span>
+        </li>
+        <li class="route-item">
+          <span class="route-from">Abidjan, Côte d'Ivoire</span>
+          <span class="route-arrow">——▶</span>
+          <span class="route-to">New York, USA</span>
+          <span class="route-time">18–24 days</span>
+        </li>
+        <li class="route-item">
+          <span class="route-from">Accra, Ghana</span>
+          <span class="route-arrow">——▶</span>
+          <span class="route-to">London Heathrow (Air)</span>
+          <span class="route-time">6–10 hrs</span>
+        </li>
+        <li class="route-item">
+          <span class="route-from">Lomé, Togo</span>
+          <span class="route-arrow">——▶</span>
+          <span class="route-to">Johannesburg, SA</span>
+          <span class="route-time">7–10 days</span>
+        </li>
+        <li class="route-item">
+          <span class="route-from">Douala, Cameroon</span>
+          <span class="route-arrow">——▶</span>
+          <span class="route-to">Hamburg, Germany</span>
+          <span class="route-time">16–20 days</span>
+        </li>
+      </ul>
+    </div>
+    <div class="map-placeholder reveal">
+      <!-- World map SVG outline (simplified) -->
+      <svg viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <path d="M130 120 Q145 110 160 115 Q175 120 185 110 Q200 100 215 105 Q225 95 240 100 L250 120 Q235 130 220 135 Q210 145 195 140 Q180 150 165 145 Q145 155 130 145 Z" fill="#c8963e"/>
+        <path d="M250 100 Q275 85 295 90 Q320 80 345 85 Q365 75 385 80 Q400 70 420 75 L425 100 Q405 110 385 105 Q365 115 345 110 Q325 120 300 115 Q280 125 260 120 Z" fill="#c8963e"/>
+        <path d="M185 145 Q200 140 210 150 Q225 155 235 148 Q248 155 250 165 Q240 175 225 178 Q210 185 195 180 Q180 188 170 182 Q160 178 162 165 Q168 155 185 145 Z" fill="#c8963e"/>
+        <path d="M420 75 Q445 65 470 70 Q500 60 525 65 Q545 55 565 60 Q580 52 595 58 L600 80 Q585 90 565 85 Q545 95 525 90 Q505 100 480 95 Q455 105 435 100 Z" fill="#c8963e"/>
+        <path d="M600 80 Q625 68 650 73 Q675 63 700 68 Q720 58 740 63 Q755 55 770 60 L775 82 Q758 92 738 87 Q718 97 698 92 Q675 102 650 97 Q625 107 605 102 Z" fill="#c8963e"/>
+        <path d="M330 180 Q348 170 365 175 Q380 168 395 173 Q410 165 425 170 L430 195 Q415 205 398 200 Q380 210 362 205 Q345 215 330 208 Z" fill="#c8963e"/>
+        <path d="M430 195 Q448 185 465 190 Q478 183 492 188 L495 210 Q480 220 465 215 Q450 225 435 218 Z" fill="#c8963e"/>
+        <path d="M65 160 Q80 150 92 155 Q100 148 110 153 Q118 145 128 150 L130 175 Q118 185 108 180 Q98 188 88 183 Q75 188 65 182 Z" fill="#c8963e"/>
+        <path d="M295 225 Q310 215 325 220 Q338 212 352 218 Q362 210 375 215 L378 240 Q362 250 348 245 Q332 255 318 250 Q300 258 292 248 Z" fill="#c8963e"/>
+        <path d="M490 160 Q510 148 530 153 Q550 143 570 148 Q588 140 605 145 L608 168 Q590 178 570 173 Q550 183 530 178 Q510 188 492 182 Z" fill="#c8963e"/>
+        <path d="M700 140 Q725 128 750 133 Q775 123 800 128 Q820 120 840 125 L845 148 Q825 158 800 153 Q775 163 750 158 Q725 168 702 162 Z" fill="#c8963e"/>
+        <!-- Dotted route lines -->
+        <line x1="215" y1="160" x2="520" y2="155" stroke="#e8b55a" stroke-width="1.5" stroke-dasharray="6 4" opacity=".5"/>
+        <line x1="215" y1="160" x2="580" y2="170" stroke="#e8b55a" stroke-width="1.5" stroke-dasharray="6 4" opacity=".4"/>
+        <line x1="215" y1="160" x2="760" y2="150" stroke="#e8b55a" stroke-width="1" stroke-dasharray="4 5" opacity=".35"/>
+        <!-- Origin dot -->
+        <circle cx="215" cy="160" r="5" fill="#e8b55a"/>
+        <circle cx="215" cy="160" r="9" stroke="#e8b55a" stroke-width="1" fill="none" opacity=".5"/>
+        <!-- Destination dots -->
+        <circle cx="520" cy="155" r="4" fill="#c8963e" opacity=".7"/>
+        <circle cx="580" cy="170" r="4" fill="#c8963e" opacity=".7"/>
+        <circle cx="760" cy="150" r="4" fill="#c8963e" opacity=".7"/>
+        <circle cx="140" cy="165" r="4" fill="#c8963e" opacity=".6"/>
+        <circle cx="350" cy="230" r="4" fill="#c8963e" opacity=".6"/>
+      </svg>
+      <p style="color:var(--muted);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-family:'DM Mono',monospace;">Global Coverage Network</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section id="testimonials">
+  <div class="section-label">Client Voices</div>
+  <h2 class="section-title">Trusted by <strong>Industry</strong><br>Leaders</h2>
+  <div class="testimonial-grid">
+    <div class="testi-card reveal">
+      <p class="testi-text">Hephzyreigns Holdings transformed our import operations completely. Their customs team navigated complex duty structures and saved us significant costs on every container. Exceptional professionalism throughout.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">KA</div>
+        <div>
+          <div class="testi-name">Kwame Asante</div>
+          <div class="testi-role">Head of Supply Chain, Afrimarts Group</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <p class="testi-text">We've shipped perishable goods with them for three years now. Their cold chain management is flawless and the real-time tracking portal gives our team total confidence in every shipment.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">FO</div>
+        <div>
+          <div class="testi-name">Fatima Ouédraogo</div>
+          <div class="testi-role">Operations Director, FreshLink Foods</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <p class="testi-text">Moving heavy industrial equipment across borders is never easy, but Hephzyreigns made it seamless. Their project cargo team handled every permit, route survey, and carrier coordination perfectly.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">DM</div>
+        <div>
+          <div class="testi-name">David Mensah</div>
+          <div class="testi-role">Procurement Manager, InfraBuild Ltd.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="cta">
+  <div class="section-label">Get Started</div>
+  <h2 class="section-title">Ready to Ship<br><strong>With Confidence?</strong></h2>
+  <p>Let's discuss your logistics needs and design a solution that delivers — on time, on budget, and without compromise.</p>
+  <div class="cta-actions">
+    <a href="#contact" class="btn-primary">Request a Quote</a>
+    <a href="tel:0507058141" class="btn-outline">📞 Call Us Now</a>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="section-label">Contact Us</div>
+  <h2 class="section-title">Get in <strong>Touch</strong></h2>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <h3>We're ready to move your cargo.</h3>
+      <p>Fill in the form and a logistics specialist will reach out within 2 business hours to discuss your shipment requirements and provide a tailored quote.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div class="contact-detail-text">
+          <strong>Head Office</strong>
+          <span>Accra, Greater Accra, Ghana</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📞</div>
+        <div class="contact-detail-text">
+          <strong>Phone</strong>
+          <span>0507058141</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">✉️</div>
+        <div class="contact-detail-text">
+          <strong>Email</strong>
+          <span>hephzy46@gmail.com</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">🕐</div>
+        <div class="contact-detail-text">
+          <strong>Office Hours</strong>
+          <span>Mon – Fri: 8:00 AM – 6:00 PM GMT</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Your full name" />
+        </div>
+        <div class="form-group">
+          <label>Company</label>
+          <input type="text" placeholder="Your company" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="you@company.com" />
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" placeholder="+233 …" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Service Required</label>
+        <select>
+          <option value="">Select a service…</option>
+          <option>Ocean Freight (FCL)</option>
+          <option>Ocean Freight (LCL)</option>
+          <option>Air Cargo</option>
+          <option>Road Haulage</option>
+          <option>Warehousing & Distribution</option>
+          <option>Customs Brokerage</option>
+          <option>Supply Chain Management</option>
+          <option>Project Cargo</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Origin</label>
+          <input type="text" placeholder="Country / Port" />
+        </div>
+        <div class="form-group">
+          <label>Destination</label>
+          <input type="text" placeholder="Country / Port" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Message / Cargo Details</label>
+        <textarea rows="4" placeholder="Describe your cargo, weight, volume, or any special requirements…"></textarea>
+      </div>
+      <div class="form-submit">
+        <button class="btn-primary" style="width:100%;text-align:center;border:none;" onclick="handleSubmit(event)">
+          Send Enquiry →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <div class="logo-mark">H</div>
+        <div class="logo-text">
+          Hephzyreigns Holdings
+          <span>Global Shipping & Logistics</span>
+        </div>
+      </a>
+      <p>Precision logistics and global cargo solutions connecting West Africa and the world — since 2006.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Ocean Freight</a></li>
+        <li><a href="#services">Air Cargo</a></li>
+        <li><a href="#services">Road Haulage</a></li>
+        <li><a href="#services">Warehousing</a></li>
+        <li><a href="#services">Customs Brokerage</a></li>
+        <li><a href="#services">Supply Chain</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#coverage">Coverage</a></li>
+        <li><a href="#testimonials">Clients</a></li>
+        <li><a href="#process">How It Works</a></li>
+        <li><a href="#contact">Careers</a></li>
+        <li><a href="#contact">News</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Accra, Ghana</a></li>
+        <li><a href="tel:0507058141">0507058141</a></li>
+        <li><a href="mailto:hephzy46@gmail.com">hephzy46@gmail.com</a></li>
+        <li><a href="#contact">Get a Quote</a></li>
+        <li><a href="#">Track Shipment</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Hephzyreigns Holdings. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="#" class="social-btn" title="LinkedIn">in</a>
+      <a href="#" class="social-btn" title="Twitter">𝕏</a>
+      <a href="#" class="social-btn" title="Facebook">f</a>
+      <a href="#" class="social-btn" title="WhatsApp">W</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── NAV SCROLL ──
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // ── HAMBURGER ──
+  const ham = document.getElementById('ham');
+  const navLinks = document.querySelector('.nav-links');
+  let menuOpen = false;
+  ham.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    navLinks.style.display = menuOpen ? 'flex' : '';
+    navLinks.style.flexDirection = menuOpen ? 'column' : '';
+    navLinks.style.position = menuOpen ? 'fixed' : '';
+    navLinks.style.top = menuOpen ? '70px' : '';
+    navLinks.style.left = '0'; navLinks.style.right = '0';
+    navLinks.style.background = menuOpen ? 'rgba(7,17,31,.97)' : '';
+    navLinks.style.padding = menuOpen ? '2rem 5vw' : '';
+    navLinks.style.backdropFilter = menuOpen ? 'blur(18px)' : '';
+    navLinks.style.zIndex = menuOpen ? '99' : '';
+  });
+
+  // ── REVEAL ON SCROLL ──
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (i % 3) * 0.12 + 's';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => io.observe(r));
+
+  // ── COUNTER ANIMATION ──
+  function animateCount(el, target, duration = 1800) {
+    const start = performance.now();
+    const update = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(ease * target).toLocaleString();
+      if (p < 1) requestAnimationFrame(update);
+      else el.textContent = target.toLocaleString();
+    };
+    requestAnimationFrame(update);
+  }
+
+  const statEls = document.querySelectorAll('.count, [data-target]');
+  const statsIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const target = parseInt(e.target.dataset.target);
+        animateCount(e.target, target);
+        statsIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  statEls.forEach(el => statsIO.observe(el));
+
+  // ── FORM SUBMIT ──
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target;
+    btn.textContent = '✓ Enquiry Received!';
+    btn.style.background = 'linear-gradient(135deg, #2a7a4a, #3a9a5a)';
+    setTimeout(() => {
+      btn.textContent = 'Send Enquiry →';
+      btn.style.background = '';
+    }, 3500);
+  }
+</script>
+</body>
+</html>
